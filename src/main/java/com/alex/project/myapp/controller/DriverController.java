@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alex.project.myapp.model.Driver;
-import com.alex.project.myapp.repository.DriverRepository;
+import com.alex.project.myapp.service.DriverService;
 
 
 
@@ -25,56 +25,46 @@ import com.alex.project.myapp.repository.DriverRepository;
 @CrossOrigin(origins = "*")
 public class DriverController {
     @Autowired
-    private DriverRepository driverRepository;
+    private DriverService driverService;
 
     // Get all drivers
     @GetMapping
     public List<Driver> getAllDrivers() {
-        return driverRepository.findAll();
+        return driverService.getAllDrivers();
     }
 
     // Create a new driver
     @PostMapping 
     public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
-        Driver savedDriver = driverRepository.save(driver);
+        Driver savedDriver = driverService.createDriver(driver);
         return ResponseEntity.created(null).body(savedDriver);
     }
 
     // Get driver by ID
     @GetMapping("/{id}")
     public ResponseEntity<Driver> getDriverById(@PathVariable Long id) {
-        Optional<Driver> driver = driverRepository.findById(id);
-        if (driver.isPresent()) {
-            return ResponseEntity.ok(driver.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Driver> driverO = driverService.getDriverById(id);
+        return driverO
+                .map(driver -> ResponseEntity.ok(driver))
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    // Update a driver
     @PutMapping("/{id}")
     public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driverDetails) {
-        Optional<Driver> driver = driverRepository.findById(id);
+        Optional<Driver> updatedDriver = driverService.updateDriver(id,driverDetails);
 
-        if(driver.isPresent()){
-            Driver existingDriver = driver.get();
-            existingDriver.setFirstName(driverDetails.getFirstName());
-            existingDriver.setLastName(driverDetails.getLastName());
-            existingDriver.setTeam(driverDetails.getTeam());
-            existingDriver.setNationality(driverDetails.getNationality());
-            existingDriver.setDriverNumber(driverDetails.getDriverNumber());
-            Driver updatedDriver = driverRepository.save(existingDriver);
-            return ResponseEntity.ok(updatedDriver);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return updatedDriver
+                .map(driver -> ResponseEntity.ok(driver))
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    // Delete a driver
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDriver(@PathVariable Long id) {
-        Optional<Driver> driver = driverRepository.findById(id);
+        Boolean deleted = driverService.deleteDriver(id);
 
-        if(driver.isPresent()){
-            driverRepository.delete(driver.get());
+        if(deleted){
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
