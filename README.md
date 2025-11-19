@@ -26,15 +26,15 @@
 ---
 
 ## Table of Contents
-- [Project Description](#-project-description)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Installation & Setup](#-installation-instructions)
-- [API Endpoints](#-api-endpoints)
-- [Database](#-database)
-- [Testing](#-testing)
-- [Contributing](#-contributing-guidelines)
-- [License & Author](#-license-information)
+- [Project Description](#project-description)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#installation-instructions)
+- [API Endpoints](#api-endpoints)
+- [Database](#database)
+- [Testing](#testing)
+- [Contributing](#contributing-guidelines)
+- [License & Author](#license-information)
 
 ---
 
