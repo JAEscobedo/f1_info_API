@@ -1,15 +1,45 @@
+<div align="center">
+
+<img width="200" height="auto" alt="f1_info_api_logo" src="https://github.com/user-attachments/assets/82f1c39c-4bcb-4444-9e3f-03baaa4d2a51" />
+
 # F1 Info API
 
-## Project Description
-The F1 Info API is a RESTful API built with Spring Boot that provides comprehensive data related to Formula 1 drivers. This API allows you to manage driver information including their personal details, team affiliations, and racing numbers.
+![GitHub license](https://img.shields.io/github/license/JAEscobedo/f1_info_API?style=flat-square&color=blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/JAEscobedo/f1_info_API?style=flat-square&color=orange)
+![GitHub repo size](https://img.shields.io/github/repo-size/JAEscobedo/f1_info_API?style=flat-square&color=green)
 
-## Technologies Used
-- **Java 21** - Programming language
-- **Spring Boot 3.5.7** - Framework for building the API
-- **Spring Data JPA** - For database operations
-- **H2 Database** - In-memory database for development
-- **Lombok** - To reduce boilerplate code
-- **Maven** - Build and dependency management
+<p>
+  <b>A comprehensive RESTful API for Formula 1 driver management built with Spring Boot.</b>
+</p>
+
+<br>
+
+<img src="https://img.shields.io/badge/Java_21-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21" />
+  <img src="https://img.shields.io/badge/Spring_Boot_3.5.7-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white" alt="Spring Boot 3.5.7" />
+  <img src="https://img.shields.io/badge/Spring_Data_JPA-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white" alt="Spring Data JPA" />
+  <img src="https://img.shields.io/badge/H2_Database-003B57?style=for-the-badge&logoColor=white" alt="H2 Database" />
+  <img src="https://img.shields.io/badge/Project_Lombok-BC0230?style=for-the-badge&logo=lombok&logoColor=white" alt="Lombok" />
+  <img src="https://img.shields.io/badge/Apache_Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven" />
+
+</div>
+
+---
+
+## Table of Contents
+- [Project Description](#-project-description)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation-instructions)
+- [API Endpoints](#-api-endpoints)
+- [Database](#-database)
+- [Testing](#-testing)
+- [Contributing](#-contributing-guidelines)
+- [License & Author](#-license-information)
+
+---
+
+## Project Description
+The **F1 Info API** is a RESTful API built with Spring Boot that provides comprehensive data related to Formula 1 drivers. This API allows you to manage driver information including their personal details, team affiliations, and racing numbers. It is designed as a learning project to demonstrate clean architecture and REST principles.
 
 ## Prerequisites
 Before running this project, make sure you have:
