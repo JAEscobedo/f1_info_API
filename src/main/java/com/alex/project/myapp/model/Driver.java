@@ -38,4 +38,10 @@ public class Driver {
     
     @Column(name = "season")
     private Integer season;
+
+    @Column(name = "driver_championship_points")
+    private Integer driverChampionshipPoints;
+
+    @Column(name = "driver_championship_position")
+    private Integer driverChampionshipPosition;
 }

@@ -59,7 +59,7 @@ public class DriverService {
 
     // New season-based methods
     public List<Driver> getDriversBySeason(Integer season) {
-        return driverRepository.findBySeason(season);
+        return driverRepository.findDriverBySeason(season);
     }
 
     public Optional<Driver> getDriverBySeasonAndId(Integer season, Long id) {
@@ -81,6 +81,7 @@ public class DriverService {
     public Map<String, Object> getSeasonStatistics(Integer season) {
         Map<String, Object> stats = new HashMap<>();
         stats.put("season", season);
+        stats.put("drivers", driverRepository.findDriverBySeason(season));
         stats.put("totalDrivers", driverRepository.countBySeason(season));
         stats.put("teams", driverRepository.findDistinctTeamsBySeason(season));
         stats.put("totalTeams", driverRepository.findDistinctTeamsBySeason(season).size());
