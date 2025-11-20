@@ -38,7 +38,7 @@
 ---
 
 ## Project Description
-The **F1 Info API** is a RESTful API built with Spring Boot that provides comprehensive data related to Formula 1 drivers. This API allows you to manage driver information including their personal details, team affiliations, and racing numbers. It is designed as a learning project to demonstrate clean architecture and REST principles.
+The **F1 Info API** is a RESTful API built with Spring Boot that provides comprehensive data related to Formula 1 drivers. This API allows you to manage driver information including their personal details, team affiliations, and racing numbers. It currently includes the full driver lineup for the **2024 Formula 1 Season**. It is designed as a learning project to demonstrate clean architecture and REST principles.
 
 ## Prerequisites
 Before running this project, make sure you have:
@@ -72,25 +72,66 @@ The API will start on `http://localhost:8081`
 
 ## API Endpoints
 
-### Drivers Endpoints
-Base URL: `http://localhost:8081/api/v1/f1_info/drivers`
+### Season Endpoints
+Base URL: `http://localhost:8081/api/v1/f1_info`
 
-#### Get All Drivers
+#### Get Available Seasons
+```http
+GET /api/v1/f1_info/seasons
+```
+Returns a list of all available seasons in the database.
+
+#### Get Season Statistics
+```http
+GET /api/v1/f1_info/seasons/{season}/stats
+```
+Returns statistics for a specific season (total drivers, total teams, etc.).
+
+#### Get Teams by Season
+```http
+GET /api/v1/f1_info/seasons/{season}/teams
+```
+Returns a list of all teams participating in a specific season.
+
+### Driver Endpoints
+
+#### Get Current Season Drivers
 ```http
 GET /api/v1/f1_info/drivers
 ```
-Returns a list of all drivers.
+Returns a list of drivers for the current season (defaults to 2024).
+
+#### Get All Drivers (All Seasons)
+```http
+GET /api/v1/f1_info/drivers/all
+```
+Returns a list of all drivers across all seasons.
+
+#### Get Drivers by Season
+```http
+GET /api/v1/f1_info/seasons/{season}/drivers
+```
+Returns a list of drivers for a specific season.
+
+#### Get Driver by Season and ID
+```http
+GET /api/v1/f1_info/seasons/{season}/drivers/{driverId}
+```
+Returns a specific driver from a specific season.
+
+#### Get Drivers by Team and Season
+```http
+GET /api/v1/f1_info/seasons/{season}/teams/{team}/drivers
+```
+Returns a list of drivers for a specific team in a specific season.
 
 #### Get Driver by ID
 ```http
 GET /api/v1/f1_info/drivers/{id}
 ```
-Returns a specific driver by ID.
+Returns a specific driver by their unique database ID.
 
-**Parameters:**
-- `id` (Long) - Driver ID
-
-**Response:** `200 OK` or `404 Not Found`
+### Management Endpoints
 
 #### Create a New Driver
 ```http
@@ -103,8 +144,11 @@ POST /api/v1/f1_info/drivers
   "firstName": "Max",
   "lastName": "Verstappen",
   "team": "Red Bull Racing",
-  "nationality": "Dutch",
-  "driverNumber": 1
+  "nationality": "Netherlands",
+  "driverNumber": 1,
+  "season": 2024,
+  "driverChampionshipPoints": 437,
+  "driverChampionshipPosition": 1
 }
 ```
 
@@ -124,8 +168,11 @@ PUT /api/v1/f1_info/drivers/{id}
   "firstName": "Max",
   "lastName": "Verstappen",
   "team": "Red Bull Racing",
-  "nationality": "Dutch",
-  "driverNumber": 1
+  "nationality": "Netherlands",
+  "driverNumber": 1,
+  "season": 2024,
+  "driverChampionshipPoints": 437,
+  "driverChampionshipPosition": 1
 }
 ```
 
@@ -163,6 +210,8 @@ curl -X GET http://localhost:8081/api/v1/f1_info/drivers
 
 ## Contributing Guidelines
 **This project is open to collaboration!** Contributions are welcome and appreciated. 
+
+If you're looking for something to work on, check out the [Issues](https://github.com/JAEscobedo/f1_info_API/issues) tab! We have a list of features and improvements we'd love help with.
 
 To contribute:
 
