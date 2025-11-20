@@ -14,7 +14,7 @@ import com.alex.project.myapp.model.Driver;
 public interface DriverRepository extends JpaRepository<Driver, Long>{
     
     // Find drivers by season
-    List<Driver> findBySeason(Integer season);
+    List<Driver> findDriverBySeason(Integer season);
     
     // Find driver by season and ID
     Optional<Driver> findBySeasonAndId(Integer season, Long id);
