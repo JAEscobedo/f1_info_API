@@ -1,23 +1,14 @@
 package com.alex.project.myapp.controller;
 
+import com.alex.project.myapp.model.Driver;
+import com.alex.project.myapp.service.DriverService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.alex.project.myapp.model.Driver;
-import com.alex.project.myapp.service.DriverService;
 
 @RestController
 @RequestMapping("/api/v1/f1_info")
@@ -27,7 +18,7 @@ public class DriverController {
     private DriverService driverService;
 
     // ===== SEASON-BASED ENDPOINTS =====
-    
+
     // Get all available seasons
     @GetMapping("/seasons")
     public ResponseEntity<List<Integer>> getAvailableSeasons() {
@@ -48,7 +39,7 @@ public class DriverController {
     // Get specific driver in a season
     @GetMapping("/seasons/{season}/drivers/{driverId}")
     public ResponseEntity<Driver> getDriverBySeasonAndId(
-            @PathVariable Integer season, 
+            @PathVariable Integer season,
             @PathVariable Long driverId) {
         Optional<Driver> driver = driverService.getDriverBySeasonAndId(season, driverId);
         return driver
@@ -86,7 +77,7 @@ public class DriverController {
     }
 
     // ===== CURRENT SEASON ENDPOINTS (2024) =====
-    
+
     // Get current season drivers (defaults to 2024)
     @GetMapping("/drivers")
     public ResponseEntity<List<Driver>> getCurrentSeasonDrivers() {
@@ -95,7 +86,7 @@ public class DriverController {
     }
 
     // ===== LEGACY/ADMIN ENDPOINTS =====
-    
+
     // Get all drivers (all seasons) - mainly for admin purposes
     @GetMapping("/drivers/all")
     public ResponseEntity<List<Driver>> getAllDrivers() {
@@ -104,7 +95,7 @@ public class DriverController {
     }
 
     // Create a new driver
-    @PostMapping("/drivers") 
+    @PostMapping("/drivers")
     public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
         Driver savedDriver = driverService.createDriver(driver);
         return ResponseEntity.created(null).body(savedDriver);
@@ -132,10 +123,10 @@ public class DriverController {
     @DeleteMapping("/drivers/{id}")
     public ResponseEntity<Void> deleteDriver(@PathVariable Long id) {
         Boolean deleted = driverService.deleteDriver(id);
-        if(deleted){
+        if (deleted) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
-    }    
+    }
 }
