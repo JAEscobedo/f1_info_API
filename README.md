@@ -70,6 +70,11 @@ Before running this project, make sure you have:
 
 The API will start on `http://localhost:8081`
 
+## API Documentation
+Swagger UI: http://localhost:8081/swagger-ui.html
+
+OpenAPI JSON: http://localhost:8081/v3/api-docs
+
 ## API Endpoints
 
 ### Season Endpoints
