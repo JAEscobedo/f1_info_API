@@ -55,7 +55,7 @@ Before running this project, make sure you have:
 
 2. Navigate to the project directory:
    ```bash
-   cd f1_info_API/myapp
+   cd f1_info_API
    ```
 
 3. Build the project:
