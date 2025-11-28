@@ -1,38 +1,40 @@
 package com.alex.project.myapp.service;
 
+import com.alex.project.myapp.model.Driver;
+import com.alex.project.myapp.model.Team;
+import com.alex.project.myapp.repository.DriverRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.alex.project.myapp.model.Driver;
-import com.alex.project.myapp.repository.DriverRepository;
-
 @Service
 public class DriverService {
     @Autowired
     private DriverRepository driverRepository;
+    @Autowired
+    private TeamService teamService;
 
     // Legacy methods (for backward compatibility)
-    public List<Driver> getAllDrivers(){
+    public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
     }
 
-    public Driver createDriver(Driver driver){
+    public Driver createDriver(Driver driver) {
         return driverRepository.save(driver);
     }
 
-    public Optional<Driver> getDriverById(Long id){
-       return driverRepository.findById(id);
+    public Optional<Driver> getDriverById(Long id) {
+        return driverRepository.findById(id);
     }
 
-    public Optional<Driver> updateDriver(Long id, Driver driverDetails){
+    public Optional<Driver> updateDriver(Long id, Driver driverDetails) {
         Optional<Driver> driver = driverRepository.findById(id);
 
-        if(driver.isPresent()){
+        if (driver.isPresent()) {
             Driver existingDriver = driver.get();
             existingDriver.setFirstName(driverDetails.getFirstName());
             existingDriver.setLastName(driverDetails.getLastName());
@@ -46,10 +48,10 @@ public class DriverService {
         }
     }
 
-    public Boolean deleteDriver(Long id){
+    public Boolean deleteDriver(Long id) {
         Optional<Driver> driver = driverRepository.findById(id);
 
-        if(driver.isPresent()){
+        if (driver.isPresent()) {
             driverRepository.delete(driver.get());
             return true;
         } else {
@@ -66,8 +68,9 @@ public class DriverService {
         return driverRepository.findBySeasonAndId(season, id);
     }
 
-    public List<Driver> getDriversBySeasonAndTeam(Integer season, String team) {
-        return driverRepository.findBySeasonAndTeamIgnoreCase(season, team);
+    public List<Driver> getDriversBySeasonAndTeam(Integer season, String teamName) {
+        Team team = teamService.getTeamByName(teamName);
+        return driverRepository.findBySeasonAndTeam(season, team);
     }
 
     public List<Integer> getAvailableSeasons() {

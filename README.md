@@ -55,7 +55,7 @@ Before running this project, make sure you have:
 
 2. Navigate to the project directory:
    ```bash
-   cd f1_info_API/myapp
+   cd f1_info_API
    ```
 
 3. Build the project:
@@ -69,6 +69,11 @@ Before running this project, make sure you have:
    ```
 
 The API will start on `http://localhost:8081`
+
+## API Documentation
+Swagger UI: http://localhost:8081/swagger-ui.html
+
+OpenAPI JSON: http://localhost:8081/v3/api-docs
 
 ## API Endpoints
 
@@ -141,14 +146,16 @@ POST /api/v1/f1_info/drivers
 **Request Body:**
 ```json
 {
-  "firstName": "Max",
-  "lastName": "Verstappen",
-  "team": "Red Bull Racing",
-  "nationality": "Netherlands",
-  "driverNumber": 1,
+  "firstName": "Kimi",
+  "lastName": "Antonelli",
+  "team": {
+    "id": 1
+  },
+  "nationality": "Mexico",
+  "driverNumber": 11,
   "season": 2024,
-  "driverChampionshipPoints": 437,
-  "driverChampionshipPosition": 1
+  "driverChampionshipPoints": 152,
+  "driverChampionshipPosition": 8
 }
 ```
 
@@ -165,9 +172,15 @@ PUT /api/v1/f1_info/drivers/{id}
 **Request Body:**
 ```json
 {
+  "id": 1,
   "firstName": "Max",
   "lastName": "Verstappen",
-  "team": "Red Bull Racing",
+  "team": {
+    "id": 1,
+    "name": "Red Bull Racing",
+    "principal": "Christian Horner",
+    "base": "Milton Keynes"
+  },
   "nationality": "Netherlands",
   "driverNumber": 1,
   "season": 2024,
@@ -193,7 +206,7 @@ The project uses H2 in-memory database for development. The database is automati
 
 To access the H2 Console (if enabled):
 - URL: `http://localhost:8081/h2-console`
-- JDBC URL: `jdbc:h2:mem:testdb`
+- JDBC URL: `jdbc:h2:mem:f1db`
 - Username: `sa`
 - Password: (leave blank)
 
