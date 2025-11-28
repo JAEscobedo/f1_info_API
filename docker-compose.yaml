@@ -1,0 +1,8 @@
+services:
+  f1_info_api:
+    build:
+      context: .
+    image: f1-info-api
+    container_name: f1-info-api
+    ports:
+      - "8081:8081"
