@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/f1_info")
 @CrossOrigin(origins = "*")
@@ -96,7 +98,7 @@ public class DriverController {
 
     // Create a new driver
     @PostMapping("/drivers")
-    public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
+    public ResponseEntity<Driver> createDriver(@Valid @RequestBody Driver driver) {
         Driver savedDriver = driverService.createDriver(driver);
         return ResponseEntity.created(null).body(savedDriver);
     }
@@ -112,7 +114,7 @@ public class DriverController {
 
     // Update a driver
     @PutMapping("/drivers/{id}")
-    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driverDetails) {
+    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @Valid @RequestBody Driver driverDetails) {
         Optional<Driver> updatedDriver = driverService.updateDriver(id, driverDetails);
         return updatedDriver
                 .map(driver -> ResponseEntity.ok(driver))
