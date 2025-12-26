@@ -1,5 +1,6 @@
 package com.alex.project.myapp.controller;
 
+import com.alex.project.myapp.exception.ResourceNotFoundException;
 import com.alex.project.myapp.model.Driver;
 import com.alex.project.myapp.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
+
 
 import jakarta.validation.Valid;
 
@@ -33,7 +37,10 @@ public class DriverController {
     public ResponseEntity<List<Driver>> getDriversBySeason(@PathVariable Integer season) {
         List<Driver> drivers = driverService.getDriversBySeason(season);
         if (drivers.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "No drivers found for season " + season
+            );
         }
         return ResponseEntity.ok(drivers);
     }
@@ -46,7 +53,9 @@ public class DriverController {
         Optional<Driver> driver = driverService.getDriverBySeasonAndId(season, driverId);
         return driver
                 .map(d -> ResponseEntity.ok(d))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "Driver " + driverId + " not found in season " + season
+                ));
     }
 
     // Get drivers by team in specific season
@@ -56,7 +65,9 @@ public class DriverController {
             @PathVariable String team) {
         List<Driver> drivers = driverService.getDriversBySeasonAndTeam(season, team);
         if (drivers.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException(
+                "No drivers found for team " + team + " in season " + season
+            );
         }
         return ResponseEntity.ok(drivers);
     }
@@ -66,7 +77,9 @@ public class DriverController {
     public ResponseEntity<List<String>> getTeamsBySeason(@PathVariable Integer season) {
         List<String> teams = driverService.getTeamsBySeason(season);
         if (teams.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException(
+                "No teams found for season " + season
+            );
         }
         return ResponseEntity.ok(teams);
     }
@@ -109,7 +122,7 @@ public class DriverController {
         Optional<Driver> driverO = driverService.getDriverById(id);
         return driverO
                 .map(driver -> ResponseEntity.ok(driver))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found with id : "+id));
     }
 
     // Update a driver
@@ -118,7 +131,9 @@ public class DriverController {
         Optional<Driver> updatedDriver = driverService.updateDriver(id, driverDetails);
         return updatedDriver
                 .map(driver -> ResponseEntity.ok(driver))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Driver not found with id " + id
+                ));
     }
 
     // Delete a driver
@@ -128,7 +143,9 @@ public class DriverController {
         if (deleted) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException(
+                "Driver not found with id " + id
+            );
         }
     }
 }
